@@ -16,7 +16,7 @@ const schema = buildSchema(`
     }
 
     type Query {
-        getUsers(page: Int): [User]
+        getUsers(page: Int, name: String, phone: String, sortBy: String, sortMode: String): [User]
     }
 
     type Mutation {
@@ -27,10 +27,18 @@ const schema = buildSchema(`
 `)
 
 const solution = {
-    getUsers: ({ page = 1 }) => {
+    getUsers: ({ name, phone, page = 1, sortBy = '_id', sortMode = 'asc' }) => {
         const limit = 10
         const offset = (page - 1) * limit
-        return User.find({}).limit(limit).skip(offset)
+        const sort = {}
+        sort[sortBy] = sortMode
+
+        const params = {
+            ...(name && {name: new RegExp(name, 'i')}),
+            ...(phone && {phone: new RegExp(phone, 'i')}),
+        }
+
+        return User.find(params).sort(sort).limit(limit).skip(offset)
     },
 
     createUser: ({ input }) => User.create(input),
