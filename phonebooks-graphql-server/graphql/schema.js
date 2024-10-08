@@ -1,5 +1,6 @@
 const { buildSchema } = require('graphql')
 const User = require('../models/Users')
+const { getUsers, createUser, updateUser, deleteUser } = require('../services/users')
 
 const schema = buildSchema(`
 
@@ -10,13 +11,21 @@ const schema = buildSchema(`
         avatar: String
     }
 
+    type Users {
+        phonebooks: [User]
+        page: Int
+        limit: Int
+        pages: Int
+        total: Int
+    }
+
     input UserInput {
         name: String
         phone: String
     }
 
     type Query {
-        getUsers(page: Int, name: String, phone: String, sortBy: String, sortMode: String): [User]
+        getUsers(page: Int, keyword: String, sortBy: String, sortMode: String): Users
     }
 
     type Mutation {
@@ -27,23 +36,13 @@ const schema = buildSchema(`
 `)
 
 const solution = {
-    getUsers: ({ name, phone, page = 1, sortBy = '_id', sortMode = 'asc' }) => {
-        const limit = 10
-        const offset = (page - 1) * limit
-        const sort = {}
-        sort[sortBy] = sortMode
+    getUsers: ({ keyword = '', page = 1, limit = 10, sortBy = '_id', sortMode = 'asc' }) => getUsers({ page, limit, keyword, sortBy, sortMode }),
 
-        const params = {
-            ...(name && {name: new RegExp(name, 'i')}),
-            ...(phone && {phone: new RegExp(phone, 'i')}),
-        }
+    createUser: ({ input }) => createUser(input),
 
-        return User.find(params).sort(sort).limit(limit).skip(offset)
-    },
+    updateUser: ({ id, input }) => updateUser(id, input),
 
-    createUser: ({ input }) => User.create(input),
-    updateUser: ({ id, input }) => User.findByIdAndUpdate(id, input, { new: true }),
-    deleteUser: ({ id }) => User.findByIdAndDelete(id)
+    deleteUser: ({ id }) => deleteUser(id)
 }
 
 module.exports = { schema, solution }
