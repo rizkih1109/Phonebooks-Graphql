@@ -16,8 +16,6 @@ export default function PhoneBar({ sort, setSort, keyword, setKeyword }) {
         setSort(newSort)
     }
 
-
-
     return (
         <div className='topBar'>
             <button className="barBtn" onClick={sorting}>

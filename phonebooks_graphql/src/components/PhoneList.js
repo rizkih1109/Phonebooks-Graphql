@@ -5,11 +5,13 @@ import { useState } from "react";
 import Modal from "./Modal";
 
 
-export default function PhoneList() {
+export default function PhoneList({page, keyword, sort}) {
 
     const [isModal, setIsModal] = useState(false)
     const [selectedUser, setSelectedUser] = useState(null)
-    const { loading, error, data } = useQuery(GET_USERS);
+    const { loading, error, data } = useQuery(GET_USERS, {
+        variables: { page, keyword, sort }
+    });
 
     if (loading) return 'Loading...';
     if (error) return `Error! ${error.message}`;
@@ -19,10 +21,9 @@ export default function PhoneList() {
         setIsModal(true)
     }
 
-
     const users = data.getUsers.phonebooks
     const cards = users.map((item) => (<PhoneCard key={item._id} user={item} modal={modal} />))
-    
+
     return (
         <>
             {cards}
