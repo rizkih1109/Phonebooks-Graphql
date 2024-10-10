@@ -1,28 +1,28 @@
-import { useDispatch, useSelector } from "react-redux"
-import PhoneCard from "./PhoneCard"
-import { useEffect, useState } from "react"
-import { loadPhoneAsync } from "../lib/phonebooks/phonebooksSlice"
-import Modal from "./Modal"
+import { useQuery } from "@apollo/client";
+import { GET_USERS } from "../graphql/gql";
+import PhoneCard from "./PhoneCard";
+import { useState } from "react";
+import Modal from "./Modal";
 
-export default function PhoneList({ keyword, sort }) {
+
+export default function PhoneList() {
 
     const [isModal, setIsModal] = useState(false)
-    const [selectedUser, setSelecterUser] = useState(null)
+    const [selectedUser, setSelectedUser] = useState(null)
+    const { loading, error, data } = useQuery(GET_USERS);
 
-    const dispatch = useDispatch()
-    const { value: phonebooks } = useSelector(state => state.phone)
-
-    useEffect(() => {
-        dispatch(loadPhoneAsync({ page: 1, keyword, sort}))
-    }, [dispatch, keyword, sort])
+    if (loading) return 'Loading...';
+    if (error) return `Error! ${error.message}`;
 
     const modal = (user) => {
-        setSelecterUser(user)
+        setSelectedUser(user)
         setIsModal(true)
     }
 
-    const cards = phonebooks.map((item) => (<PhoneCard key={item._id} user={item} modal={modal} />))
 
+    const users = data.getUsers.phonebooks
+    const cards = users.map((item) => (<PhoneCard key={item._id} user={item} modal={modal} />))
+    
     return (
         <>
             {cards}

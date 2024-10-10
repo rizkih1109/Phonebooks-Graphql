@@ -1,11 +1,23 @@
-import { useDispatch } from 'react-redux'
-import { removePhoneAsync } from '../lib/phonebooks/phonebooksSlice'
+import { useMutation } from "@apollo/client";
+import { DELETE_USER, GET_USERS } from "../graphql/gql";
 
 export default function Modal({ user, setIsModal }) {
 
-    const dispatch = useDispatch()
+    const [deletePhone, { loading, error }] = useMutation(DELETE_USER, {
+        refetchQueries: [
+            GET_USERS
+        ]
+    });
+
+    if (loading) return 'Submitting...';
+    if (error) return `Submission error! ${error.message}`;
+
     const remove = () => {
-        dispatch(removePhoneAsync({ id: user._id }))
+        deletePhone({
+            variables: {
+                id: user._id
+            }
+        })
         setIsModal(false)
     }
 

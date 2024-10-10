@@ -1,18 +1,31 @@
+import { useMutation } from '@apollo/client'
 import { faPenToSquare, faTrashCan, faFloppyDisk } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { updatePhoneAsync } from '../lib/phonebooks/phonebooksSlice'
-import { useDispatch } from 'react-redux'
 import { useState } from 'react'
+import { GET_USERS, UPDATE_USER } from '../graphql/gql'
 
 export default function PhoneCard({ user, modal}) {
 
-    const dispatch = useDispatch()
     const [isEdit, setIsEdit] = useState(false)
     const [newUser, setNewUser] = useState({ name: user.name, phone: user.phone })
 
+    const [updatePhone, { loading, error }] = useMutation(UPDATE_USER, {
+        refetchQueries: [
+            GET_USERS
+        ]
+    });
+
+    if (loading) return 'Submitting...';
+    if (error) return `Submission error! ${error.message}`;
+
     const submit = (e) => {
         e.preventDefault()
-        dispatch(updatePhoneAsync({ id: user._id, ...newUser }))
+        updatePhone({
+            variables: {
+                id: user._id,
+                input: newUser
+            }
+        })
         setIsEdit(false)
     }
 
@@ -21,7 +34,7 @@ export default function PhoneCard({ user, modal}) {
             <div className="card">
                 <div>
                     <img
-                        src='/Defaultavatar.png'
+                        src={user.avatar === null ? '/Defaultavatar.png' : `http://localhost:3000/images/${user.avatar}`}
                         alt='no source'
                     />
                     <input type="file" style={{ display: 'none' }} />
@@ -44,7 +57,7 @@ export default function PhoneCard({ user, modal}) {
             <div className="card">
                 <div>
                     <img
-                        src='/Defaultavatar.png'
+                        src={user.avatar === null ? '/Defaultavatar.png' : `http://localhost:3000/images/${user.avatar}`}
                         alt='no source'
                     />
                     <input type="file" style={{ display: 'none' }} />
