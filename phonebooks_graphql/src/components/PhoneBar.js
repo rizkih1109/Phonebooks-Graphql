@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowUpAZ, faUserPlus } from '@fortawesome/free-solid-svg-icons'
+import { faArrowUpAZ, faArrowDownZA, faUserPlus } from '@fortawesome/free-solid-svg-icons'
 
 export default function PhoneBar({ sort, setSort, keyword, setKeyword }) {
 
@@ -16,10 +16,12 @@ export default function PhoneBar({ sort, setSort, keyword, setKeyword }) {
         setSort(newSort)
     }
 
+
+
     return (
         <div className='topBar'>
             <button className="barBtn" onClick={sorting}>
-                <FontAwesomeIcon icon={faArrowUpAZ} />
+                {sort === 'asc' || sort.sort === 'asc' ? <FontAwesomeIcon icon={faArrowDownZA} /> : <FontAwesomeIcon icon={faArrowUpAZ} />}
             </button>
             <input type='text' value={keyword} onInput={search} placeholder='Search...' />
             <button className='barBtn' onClick={() => navigate('/add')}>
