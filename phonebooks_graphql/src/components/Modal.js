@@ -1,14 +1,14 @@
 import { useDispatch } from 'react-redux'
-import { removeUser } from '../actions/users'
+import { removePhoneAsync } from '../lib/phonebooks/phonebooksSlice'
 
 export default function Modal({ user, setIsModal }) {
-    
+
     const dispatch = useDispatch()
     const remove = () => {
-        dispatch(removeUser(user.id))
+        dispatch(removePhoneAsync({ id: user._id }))
         setIsModal(false)
     }
-    
+
     return (
         <div className="modal-overlay">
             <div className="modal">

@@ -1,10 +1,10 @@
 import { faPenToSquare, faTrashCan, faFloppyDisk } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { removePhoneAsync, updatePhoneAsync } from '../lib/phonebooks/phonebooksSlice'
+import { updatePhoneAsync } from '../lib/phonebooks/phonebooksSlice'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 
-export default function PhoneCard({ user }) {
+export default function PhoneCard({ user, modal}) {
 
     const dispatch = useDispatch()
     const [isEdit, setIsEdit] = useState(false)
@@ -56,7 +56,7 @@ export default function PhoneCard({ user }) {
                     </div>
                     <div className="listBtn">
                         <FontAwesomeIcon icon={faPenToSquare} className='btn' onClick={() => setIsEdit(true)} />
-                        <FontAwesomeIcon icon={faTrashCan} onClick={() => dispatch(removePhoneAsync({ id: user._id }))} />
+                        <FontAwesomeIcon icon={faTrashCan} onClick={() => modal(user)} />
                     </div>
                 </div>
             </div>

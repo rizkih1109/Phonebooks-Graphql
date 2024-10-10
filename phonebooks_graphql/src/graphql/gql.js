@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const GET_USERS = gql`
-  query getUsers($page: Int, $keyword: String, $sortBy: String, $sortMode: String) {
-  getUsers(page: $page, keyword: $keyword , sortBy: $sortBy, sortMode: $sortMode) {
+  query getUsers($page: Int, $keyword: String, $sort: String) {
+  getUsers(page: $page, keyword: $keyword , sort: $sort) {
     phonebooks {
       _id
       name

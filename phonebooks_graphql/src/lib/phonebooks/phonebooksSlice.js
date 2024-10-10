@@ -2,16 +2,16 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { client } from '../../App'
 import { ADD_USER, DELETE_USER, GET_USERS, UPDATE_USER } from '../../graphql/gql'
 
-const initialState = { value: [], status: 'idle', keyword: '', sortBy: '_id', sortMode: 'asc', page: 1, limit: 30 }
+const initialState = { value: [], status: 'idle', keyword: '', sort: 'asc', page: 1, limit: 30 }
 
 export const loadPhoneAsync = createAsyncThunk(
     'phonebooks/load',
-    async ({ page = 1, keyword = '', sortBy = '_id', sortMode = 'asc', limit = 30 }) => {
+    async ({ page = 1, keyword = '', sort = 'asc', limit = 30 }) => {
         const response = await client.query({
             query: GET_USERS,
-            variables: { page, keyword, sortBy, sortMode }
+            variables: { page, keyword, sort }
         })
-        return { data: response.data, keyword, page, limit, sortBy, sortMode }
+        return { data: response.data, keyword, page, limit, sort }
     }
 )
 
