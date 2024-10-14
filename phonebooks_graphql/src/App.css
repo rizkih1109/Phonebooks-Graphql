@@ -184,7 +184,7 @@ p {
   border-radius: 3px;
 }
 
-input[id=edit]{
+.listData input{
   width: 90%;
   padding: 5px;
   margin-right: 5px;
@@ -197,7 +197,7 @@ input[id=edit]{
   margin-top: 7px;
 }
 
-.fixSaveBtn {
+.saveBtn button {
   background-color: transparent;
   border: none;
   padding: 0px;

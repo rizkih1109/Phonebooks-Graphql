@@ -66,11 +66,11 @@ export default function PhoneCard({ user, modal, refetch }) {
             {isEdit ? (
                 <form className="listData" onSubmit={submit}>
                     <div >
-                        <input id='edit' value={newUser.name} onChange={(e) => setNewUser({ ...newUser, name: e.target.value })} />
-                        <input id='edit' value={newUser.phone} onChange={(e) => setNewUser({ ...newUser, phone: e.target.value })} />
+                        <input value={newUser.name} onChange={(e) => setNewUser({ ...newUser, name: e.target.value })} />
+                        <input value={newUser.phone} onChange={(e) => setNewUser({ ...newUser, phone: e.target.value })} />
                     </div>
                     <div className="saveBtn">
-                        <button type="submit" className="fixSaveBtn">
+                        <button type="submit">
                             <FontAwesomeIcon icon={faFloppyDisk} />
                         </button>
                     </div>
