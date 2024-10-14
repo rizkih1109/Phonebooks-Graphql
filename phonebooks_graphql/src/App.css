@@ -3,6 +3,10 @@
   padding: 10px;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .barBtn {
   padding: 10px;
   margin: 0px 10px;
@@ -11,20 +15,33 @@
   border-radius: 2px;
 }
 
-input {
-  width: 90%;
-  padding: 5px;
-  display: inline-block;
-  border: 1px solid;
-  border-radius: 3px;
-}
-
 .topBar {
   margin-top: 10px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   margin-bottom: 10px;
+}
+
+.inputBar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border: 1px solid;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.inputBar input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 5px;
+}
+
+.inputBar svg {
+  margin: 0px 5px;
+  font-size: 15px;
 }
 
 .card {
@@ -74,10 +91,12 @@ p {
   padding-top: 30px;
 }
 
-input[id=name],[id=phone] {
+.formCon input {
   width: 100%;
   padding: 10px;
   margin: 5px 0px;
+  border: 1px solid;
+  border-radius: 3px;
   display: inline-block;
   box-sizing: border-box;
 }
@@ -88,7 +107,7 @@ input[id=name],[id=phone] {
   justify-content: space-between;
 }
 
-button.add {
+.addBtn button {
   background-color: #ad793e;
   border: none;
   border-radius: 3px;
@@ -98,7 +117,7 @@ button.add {
 }
 
 .modal-overlay {
-  position: absolute;
+  position: fixed;
   z-index: 9;
   top: 0;
   right: 0;
@@ -142,7 +161,7 @@ button.add {
   padding: 5px 10px;
 }
 
-.modal-close {
+.modal-header span {
   position: absolute;
   right: 8px;
   font-size: 24px;
@@ -151,27 +170,18 @@ button.add {
   margin-right: 10px;
 }
 
-.modal-title {
+.modal-header h4 {
   margin: 0px 20px;
   line-height: 1.5;
 }
 
-.modal-button-yes {
+.modal-footer button {
   margin: 5px;
   padding: 8px 20px;
   background-color: #ad793e;
   border: none;
   color: white;
-  border-radius: 5px;
-}
-
-.modal-button-no {
-  margin: 5px;
-  padding: 8px 23px;
-  background-color: #ad793e;
-  border: none;
-  color: white;
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
 input[id=edit]{

@@ -1,13 +1,15 @@
 import { useMutation } from '@apollo/client'
 import { faPenToSquare, faTrashCan, faFloppyDisk } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { GET_USERS, UPDATE_USER } from '../graphql/gql'
+import axios from 'axios'
 
-export default function PhoneCard({ user, modal}) {
+export default function PhoneCard({ user, modal, refetch }) {
 
     const [isEdit, setIsEdit] = useState(false)
     const [newUser, setNewUser] = useState({ name: user.name, phone: user.phone })
+    const fileInputRef = useRef(null)
 
     const [updatePhone, { loading, error }] = useMutation(UPDATE_USER, {
         refetchQueries: [
@@ -29,16 +31,39 @@ export default function PhoneCard({ user, modal}) {
         setIsEdit(false)
     }
 
-    if (isEdit) {
-        return (
-            <div className="card">
-                <div>
-                    <img
-                        src={user.avatar === null ? '/Defaultavatar.png' : `http://localhost:3000/images/${user.avatar}`}
-                        alt='no source'
-                    />
-                    <input type="file" style={{ display: 'none' }} />
-                </div>
+    const handleImage = async (e) => {
+        if (e.target.files || e.target.files.length > 0) {
+            const file = e.target.files[0]
+            const formData = new FormData()
+            formData.append('avatar', file)
+            try {
+                await axios.put(`http://localhost:3000/${user._id}/avatar`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                refetch()
+            } catch (err) {
+                console.log(err)
+            }
+        }
+    }
+
+    const clickImage = () => {
+        fileInputRef.current.click()
+    }
+
+    return (
+        <div className="card">
+            <div>
+                <img
+                    src={user.avatar === null ? '/Defaultavatar.png' : `http://localhost:3000/images/${user.avatar}`}
+                    alt='no source'
+                    onClick={clickImage}
+                />
+                <input type="file" style={{ display: 'none' }} ref={fileInputRef} onChange={handleImage} />
+            </div>
+            {isEdit ? (
                 <form className="listData" onSubmit={submit}>
                     <div >
                         <input id='edit' value={newUser.name} onChange={(e) => setNewUser({ ...newUser, name: e.target.value })} />
@@ -50,18 +75,7 @@ export default function PhoneCard({ user, modal}) {
                         </button>
                     </div>
                 </form>
-            </div>
-        )
-    } else {
-        return (
-            <div className="card">
-                <div>
-                    <img
-                        src={user.avatar === null ? '/Defaultavatar.png' : `http://localhost:3000/images/${user.avatar}`}
-                        alt='no source'
-                    />
-                    <input type="file" style={{ display: 'none' }} />
-                </div>
+            ) : (
                 <div className="listData">
                     <div >
                         <p>{user.name}</p>
@@ -72,8 +86,7 @@ export default function PhoneCard({ user, modal}) {
                         <FontAwesomeIcon icon={faTrashCan} onClick={() => modal(user)} />
                     </div>
                 </div>
-            </div>
-        )
-    }
-
+            )}
+        </div>
+    )
 }

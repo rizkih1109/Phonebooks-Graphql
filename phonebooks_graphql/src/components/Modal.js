@@ -13,11 +13,7 @@ export default function Modal({ user, setIsModal }) {
     if (error) return `Submission error! ${error.message}`;
 
     const remove = () => {
-        deletePhone({
-            variables: {
-                id: user._id
-            }
-        })
+        deletePhone({ variables: { id: user._id } })
         setIsModal(false)
     }
 
@@ -25,8 +21,8 @@ export default function Modal({ user, setIsModal }) {
         <div className="modal-overlay">
             <div className="modal">
                 <div className="modal-header">
-                    <h4 className='modal-title'>Delete Confirmation</h4>
-                    <span className="modal-close" onClick={() => setIsModal(false)}>
+                    <h4>Delete Confirmation</h4>
+                    <span onClick={() => setIsModal(false)}>
                         &#10005;
                     </span>
                 </div>
@@ -34,8 +30,8 @@ export default function Modal({ user, setIsModal }) {
                     <p>Are you sure to delete this contact?</p>
                 </div>
                 <div className="modal-footer">
-                    <button className="modal-button-no" onClick={() => setIsModal(false)}>No</button>
-                    <button className="modal-button-yes" onClick={remove}>Yes</button>
+                    <button onClick={() => setIsModal(false)}>No</button>
+                    <button onClick={remove}>Yes</button>
                 </div>
             </div>
         </div>
