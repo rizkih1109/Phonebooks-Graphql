@@ -58,7 +58,7 @@ export default function PhoneList({ keyword, sort }) {
     if (loading && !data) return 'Loading...';
     if (error) return `Error! ${error.message}`;
 
-    const cards = data?.getUsers?.phonebooks.map((item, index) => (<PhoneCard key={index} user={item} modal={modal} refetch={refetch} />))
+    const cards = data?.getUsers?.phonebooks.map((item, index) => (<PhoneCard key={item._id} user={item} modal={modal} refetch={refetch} />))
 
     return (
         <>

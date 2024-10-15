@@ -2,12 +2,8 @@ const User = require('../models/Users')
 const path = require('path')
 const fs = require('fs')
 
-const getUsers = async ({ keyword = '', page = 1, limit = 10, sortBy = '_id', sortMode = 'asc' }) => {
+const getUsers = async ({ keyword = '', page = 1, limit = 10, sort = 'asc' }) => {
     const offset = (page - 1) * limit
-
-    const sort = {}
-    sort[sortBy] = sortMode
-
     const params = {
         $or: [
             { name: new RegExp(keyword, 'i') },
@@ -17,7 +13,9 @@ const getUsers = async ({ keyword = '', page = 1, limit = 10, sortBy = '_id', so
 
     const total = await User.countDocuments(params)
     const pages = Math.ceil(total / limit)
-    const phonebooks = await User.find(params).sort(sort).limit(limit).skip(offset)
+    const sortMode = sort === 'asc' ? 1: -1
+
+    const phonebooks = await User.find(params).sort({name: sortMode}).limit(limit).skip(offset)
 
     return { phonebooks, page, limit, pages, total }
 }

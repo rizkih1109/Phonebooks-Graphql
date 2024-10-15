@@ -23,9 +23,7 @@ export default function AddPhone({ sort, keyword }) {
     const submit = (e) => {
         e.preventDefault()
         addPhone({
-            variables: {
-                input: user
-            }
+            variables: { input: user }
         })
         SetUser({ name: '', phone: '' })
         navigate('/')

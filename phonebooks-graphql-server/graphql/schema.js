@@ -25,7 +25,7 @@ const schema = buildSchema(`
     }
 
     type Query {
-        getUsers(page: Int, keyword: String, sortBy: String, sortMode: String): Users
+        getUsers(page: Int, keyword: String, sort: String): Users
     }
 
     type Mutation {
@@ -36,7 +36,7 @@ const schema = buildSchema(`
 `)
 
 const solution = {
-    getUsers: ({ keyword = '', page = 1, limit = 10, sortBy = '_id', sortMode = 'asc' }) => getUsers({ page, limit, keyword, sortBy, sortMode }),
+    getUsers: ({ keyword = '', page = 1, limit = 30, sort = 'asc' }) => getUsers({ page, limit, keyword, sort }),
 
     createUser: ({ input }) => createUser(input),
 

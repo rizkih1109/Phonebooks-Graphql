@@ -77,6 +77,15 @@ p {
   margin-top: 13px;
 }
 
+.listData input{
+  width: 90%;
+  padding: 5px;
+  margin-right: 5px;
+  margin-top: 7px;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
 .listBtn {
   margin-top: 20px;
 }
@@ -150,17 +159,6 @@ p {
   padding: 15px 0px;
 }
 
-.modal-content {
-  margin: 35px 20px;
-}
-
-.modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  border-top: 2px solid #e9ecef;
-  padding: 5px 10px;
-}
-
 .modal-header span {
   position: absolute;
   right: 8px;
@@ -175,6 +173,17 @@ p {
   line-height: 1.5;
 }
 
+.modal-content {
+  margin: 35px 20px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 2px solid #e9ecef;
+  padding: 5px 10px;
+}
+
 .modal-footer button {
   margin: 5px;
   padding: 8px 20px;
@@ -182,15 +191,6 @@ p {
   border: none;
   color: white;
   border-radius: 3px;
-}
-
-.listData input{
-  width: 90%;
-  padding: 5px;
-  margin-right: 5px;
-  margin-top: 7px;
-  display: inline-block;
-  box-sizing: border-box;
 }
 
 .saveBtn {
